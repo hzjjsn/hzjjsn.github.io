@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>Chapter 1. First WebGL Demo</title>
+		<!-- 顶点着色器和片元着色器代码 -->
+		<script id="vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 a_position;
+			attribute vec4 a_color;
+			varying vec4 v_color;
+			void main(){
+				gl_Position = a_position;
+				v_color=a_color;
+			}
+		</script>
+		<script id="fragment-shader" type="x-shader/x-fragment">
+			precision mediump float;
+			varying vec4 v_color;
+			void main(){
+				gl_FragColor =v_color;
+				
+			}
+		</script>
+		<!-- 一组相关的JS库 -->
+		<script type="text/javascript" src="webgl-utils.js"></script>
+		<script type="text/javascript" src="initShaders.js"></script>
+		<!-- <script type="text/javascript" src="../js/common/glMatrix-0.9.5.min.js"></script> -->
+		<!-- 绘制三角形的JS代码 -->
+		<script type="text/javascript" src="triangle.js"></script>
+	</head>
+	<body>
+		<br />
+
+		<canvas id="triangle-canvas" style="border:none;" width="500" height="500"></canvas>
+	</body>
+</html>
