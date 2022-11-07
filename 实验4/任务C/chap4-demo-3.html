@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+	<div>任务c：为页面添加控件，如按钮、选择菜单、滑块等实现对动画效果的交互控制</div><br />
+	<div id="uiContainer">
+	  <div id="ui">
+		<div id="x"></div>
+		<div id="y"></div>
+	  </div>
+	</div>	
+	<canvas id="canvas"></canvas><br />
+	
+
+	<!-- vertex shader -->
+	<script id="2d-vertex-shader" type="x-shader/x-vertex">
+	attribute vec2 a_position;
+
+	uniform vec2 u_resolution;
+	uniform vec2 u_translation;
+
+	void main() {
+	   // Add in the translation.
+	   vec2 position = a_position + u_translation;
+
+	   // convert the position from pixels to 0.0 to 1.0
+	   vec2 zeroToOne = position / u_resolution;
+
+	   // convert from 0->1 to 0->2
+	   vec2 zeroToTwo = zeroToOne * 2.0;
+
+	   // convert from 0->2 to -1->+1 (clipspace)
+	   vec2 clipSpace = zeroToTwo - 1.0;
+
+	   gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+	}
+	</script>
+	<!-- fragment shader -->
+	<script id="2d-fragment-shader" type="x-shader/x-fragment">
+	precision mediump float;
+
+	uniform vec4 u_color;
+
+	void main() {
+	   gl_FragColor = u_color;
+	}
+	</script>
+	
+	<script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+	<script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
+	<!-- partial -->
+	<script  src="../任务C/triangle3.js"></script>
+
+</body>
+</html>

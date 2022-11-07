@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制点坐标</title>
+    <script src="triangle4.js"></script>
+    <script>
+        //js代码
+        var webgl;
+        var projMat4=mat4.create();
+        //顶点着色器shader
+        var vertexString=`
+            attribute vec4 a_position;//坐标点
+            uniform mat4 proj;   //用来承接投影坐标系的
+            void main(void){//shader的入口函数
+                //顶点着色器内置的变量信息
+                gl_Position=a_position;//投影坐标系*坐标点
+                gl_PointSize=30.0;
+            }
+        `;//模板字符串、一个新语法
+        //片元字符串
+        var fragmentString=`
+            void main(void){
+                gl_FragColor=vec4(1,0,1.0,1.0);//最后一个表示透明度
+            }  
+        `;
+        //入口函数
+        function init(){
+            initWebgl();
+            initShader();
+            initBuffer();
+            draw();
+        }
+        //webgl初始化函数
+        function initWebgl(){
+            //let允许我们声明一个作用域或被限制在块级中的变量、语句或者表达式
+            //let声明的变量只能是全局或者整个函数块的。
+            let webglDiv=document.getElementById("webglCanvas");//获取容器，通过id获取
+            webgl=webglDiv.getContext("webgl");//获取上下文
+            //（0，0）原点、右上的点、左下的点
+            webgl.viewport(0,0,webglDiv.clientWidth,webglDiv.clientHeight);//平面可视域范围
+            //7个参数，右上角的坐标、左下角的坐标、z方向、投影矩阵
+            mat4.ortho(0,webglDiv.clientWidth,webglDiv.clientHeight,0,-1.0,1.0,projMat4);//设置投影坐标系；
+
+        }
+        //shader初始化函数
+        function initShader(){
+            //计算机GPU调用的语言
+            //把位置信息赋给Shader
+            let vsshader=webgl.createShader(webgl.VERTEX_SHADER);//顶点shader
+            let fssagder=webgl.createShader(webgl.FRAGMENT_SHADER);//片元shader
+            //把文本和shader一一绑定
+            webgl.shaderSource(vsshader,vertexString);
+            webgl.shaderSource(fssagder,fragmentString);
+
+            //编译
+            webgl.compileShader(vsshader);
+            webgl.compileShader(fssagder);
+            
+            if (!webgl.getShaderParameter(vsshader, webgl.COMPILE_STATUS)) {
+                var err = webgl.getShaderInfoLog(vsshader);
+                alert(err);
+                return;
+            }
+            if (!webgl.getShaderParameter(fssagder, webgl.COMPILE_STATUS)) {
+                var err = webgl.getShaderInfoLog(fsshader);
+                alert(err);
+                return;
+            }
+
+
+            //创建项目
+            let program=webgl.createProgram();
+            webgl.attachShader(program,vsshader);
+            webgl.attachShader(program,fssagder);
+
+            webgl.linkProgram(program);//webgl的这个对象和我们现在创建的项目连接
+            webgl.useProgram(program);//使用
+
+            //把构建的这个项目复制到这个对象里面
+            webgl.program=program;
+
+
+        }
+        var POINTS=[];
+        //数据缓冲区初始化函数
+        function initBuffer(){
+
+            let aPosition=webgl.getAttribLocation(webgl.program,"a_position");//获取变量
+            
+            document.addEventListener("mousedown",function(e){//创建鼠标监听事件，鼠标按下去的时候，执行下面这个函数
+                let x=e.clientX;
+                let y=e.clientY;
+                let rect=e.target.getBoundingClientRect();
+                let pointx=((x-rect.left)-512)/512;
+                let pointy=(350-(y-rect.top))/350;
+                POINTS.push(pointx);
+                POINTS.push(pointy);
+                POINTS.push(0);
+                POINTS.push(1.0);//
+                let pointPosition=new Float32Array(POINTS);//x,y,z 坐标
+                let pointBuffer=webgl.createBuffer();//创建缓冲区
+                webgl.bindBuffer(webgl.ARRAY_BUFFER,pointBuffer);//
+                webgl.bufferData(webgl.ARRAY_BUFFER,pointPosition,webgl.STATIC_DRAW);
+                webgl.enableVertexAttribArray(aPosition);
+                webgl.vertexAttribPointer(aPosition,4,webgl.FLOAT,false,4*4,0*4);
+
+
+                webgl.clearColor(1.0,1.0,1.0,1.0);//相当于背景色
+                webgl.clear(webgl.COLOR_BUFFER_BIT);//使用之前指定的颜色，清空绘图区
+                webgl.drawArrays(webgl.POINTS,0,POINTS.length);//绘制点
+
+            })
+            
+            
+            
+            //webgl.vertexAttrib4fv(aPosition,pointPosition);//四个参数的数组
+           
+            let uniformproj=webgl.getUniformLocation(webgl.program,"proj");
+            webgl.uniformMatrix4fv(uniformproj,false,projMat4);//投影坐标系
+            //
+
+        }
+        //webgl的绘制函数
+        function draw(){
+            // webgl.clearColor(0.0,0.0,0.0,1.0);//相当于背景色
+            // webgl.clear(webgl.COLOR_BUFFER_BIT);//使用之前指定的颜色，清空绘图区
+            // webgl.drawArrays(webgl.POINTS,0,1);//绘制点
+
+        }
+
+    </script>
+</head>
+<body onload="init()">
+    <!-- //调用函数，被加载就执行这个函数 -->
+    <div>任务d：为绘制元素或动画效果添加鼠标或按键事件支持</div>
+    <input type="text" value="用鼠标在屏幕上绘制多个点"><br/>
+    <!-- <div>用鼠标在屏幕上绘制多个点</div> -->
+    <canvas id="webglCanvas" width="1024" height="750" ></canvas>
+
+</body>
+</html>

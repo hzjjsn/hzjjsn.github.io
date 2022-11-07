@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="triangle5.js"></script>
+    <script>
+        let vertexstring = `
+        attribute vec3 a_position;
+        uniform     mat4    proj;
+        attribute vec3 a_color;
+        varying vec3 inColor;
+        void main(void){
+            gl_Position = vec4(a_position,1.0)  ;
+            gl_PointSize=60.0;
+            inColor = a_color;
+        }
+        `;
+        let fragmentstring = `
+        precision mediump float;
+        varying vec3 inColor;
+        void main(void){
+          gl_FragColor = vec4(inColor,1.0);
+        }
+        `;
+        var projMat4 = mat4.create();
+        var webgl;
+		var op=1;
+		var points = [];
+		function drawa(){
+			op=1;
+			webgl.clearColor(0.0, 0.0, 0.0, 1.0);
+			webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
+			points = [];
+			colors=[];
+		}
+		function drawb(){
+			op=2;
+			webgl.clearColor(0.0, 0.0, 0.0, 1.0);
+			webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
+			points = [];colors=[];
+		}
+		function drawc(){
+			op=3;
+			webgl.clearColor(0.0, 0.0, 0.0, 1.0);
+			webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
+			points = [];colors=[];
+		}
+        function init() {
+            initWebgl();
+            initShader();
+            initBuffer();
+            draw();
+        }
+        function initWebgl() {
+            let webglDiv = document.getElementById('myCanvas');
+            webgl = webglDiv.getContext("webgl");
+            webgl.viewport(0, 0, webglDiv.clientWidth, webglDiv.clientHeight);
+            mat4.ortho(0, webglDiv.clientWidth, webglDiv.clientHeight, 0, -1.0, 1.0, projMat4)
+        }
+        function initShader() {
+
+            let vsshader = webgl.createShader(webgl.VERTEX_SHADER);
+            let fsshader = webgl.createShader(webgl.FRAGMENT_SHADER);
+
+            webgl.shaderSource(vsshader, vertexstring);
+            webgl.shaderSource(fsshader, fragmentstring);
+
+            webgl.compileShader(vsshader);
+            webgl.compileShader(fsshader);
+            if (!webgl.getShaderParameter(vsshader, webgl.COMPILE_STATUS)) {
+                var err = webgl.getShaderInfoLog(vsshader);
+                alert(err);
+                return;
+            }
+            if (!webgl.getShaderParameter(fsshader, webgl.COMPILE_STATUS)) {
+                var err = webgl.getShaderInfoLog(fsshader);
+                alert(err);
+                return;
+            }
+            let program = webgl.createProgram();
+            webgl.attachShader(program, vsshader);
+            webgl.attachShader(program, fsshader)
+
+            webgl.linkProgram(program);
+            webgl.useProgram(program);
+
+            webgl.program = program
+        }
+        
+        var colors=[];
+        function initBuffer() {
+            let aPsotion = webgl.getAttribLocation(webgl.program, "a_position");
+            let aColor = webgl.getAttribLocation(webgl.program, "a_color");
+            
+            document.addEventListener("mousedown", function (e) {
+                let x = e.clientX;
+                let y = e.clientY;
+                let rect = e.target.getBoundingClientRect();
+                let pointx = ((x - rect.left) - 512) / 512;
+                let pointy = (300 - (y - rect.top)) / 300;
+				if(x<=1024&&y<=600){
+				
+				
+                points.push(pointx);
+                points.push(pointy);
+                points.push(0);
+				var ambhexcolor = document.getElementById( "col" ).value.substring(1).match(/.{1,2}/g);
+
+				colors.push(parseInt(ambhexcolor[0], 16) * 1.0 / 255.0);
+				colors.push(parseInt(ambhexcolor[1], 16) * 1.0 / 255.0);
+				colors.push(parseInt(ambhexcolor[2], 16) * 1.0 / 255.0);
+				//colors.push(Math.random());
+				//colors.push(Math.random());
+				//colors.push(Math.random());
+          
+                let pointPosition = new Float32Array(points);
+                let pointBuffer = webgl.createBuffer();
+                webgl.bindBuffer(webgl.ARRAY_BUFFER, pointBuffer);
+                webgl.bufferData(webgl.ARRAY_BUFFER, pointPosition, webgl.STATIC_DRAW);
+                webgl.enableVertexAttribArray(aPsotion);
+                webgl.vertexAttribPointer(aPsotion, 3, webgl.FLOAT, false, 0, 0);
+
+                let pointColor = new Float32Array(colors);
+                let pointColorBuffer = webgl.createBuffer();
+                webgl.bindBuffer(webgl.ARRAY_BUFFER, pointColorBuffer);
+                webgl.bufferData(webgl.ARRAY_BUFFER, pointColor, webgl.STATIC_DRAW);
+                webgl.enableVertexAttribArray(aColor);
+                webgl.vertexAttribPointer(aColor, 3, webgl.FLOAT, false, 0, 0);
+
+
+                webgl.clearColor(0.0, 0.0, 0.0, 1.0);
+                webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
+				if(op==1){
+					webgl.drawArrays(webgl.POINTS, 0, points.length/2);
+				}else if(op==2){
+					webgl.drawArrays(webgl.LINES,0,points.length/3);
+				}else if(op==3){
+					webgl.drawArrays(webgl.TRIANGLES,0,points.length/3);
+				}
+                }
+				
+				
+            })
+
+            let uniformProj = webgl.getUniformLocation(webgl.program, "proj");
+            webgl.uniformMatrix4fv(uniformProj, false, projMat4);
+        }
+        function draw() {
+            webgl.clearColor(0.0, 0.0, 0.0, 1.0);
+            webgl.clear(webgl.COLOR_BUFFER_BIT | webgl.DEPTH_BUFFER_BIT);
+
+        }
+    </script>
+</head>
+
+<body onload="init()">
+    <canvas id='myCanvas' width="1024" height='600'></canvas>
+	<br />
+	选择图案：<input type="button" value="正方形" onclick="drawa()"/>
+	<input type="button" value="直线" onclick="drawb()"/>
+	<input type="button" value="三角形" onclick="drawc()"/><br />
+	选择颜色：<input type="color" value="#ffffff" id="col">
+</body>
+
+</html>

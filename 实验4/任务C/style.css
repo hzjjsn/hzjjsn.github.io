@@ -1,0 +1,54 @@
+body {
+	margin: 0;
+  }
+  canvas {
+	background-color: #fff;
+	width: 800px;
+	height: 800px;
+	display: block;
+  }
+  
+  #uiContainer {
+	font-family: monospace;
+  
+  }
+  .gman-widget-value {
+	float: right;
+	font-size: medium;
+	order: 1;
+	min-width: 3em;
+  }
+  
+  .gman-slider-outer, .gman-widget-outer {
+	float: right;
+	display: flex;
+	align-items: center;
+	height: 1.7em;
+  }
+  
+  #ui {
+	  width: 200px;
+  }
+  
+  @media (max-width: 390px) {
+	pre {
+	  font-size: xx-small !important;
+	  max-width: 300px !important;
+	}
+	canvas {
+	  width: 100vw;
+	}
+	.iframe canvas {
+	  width: 100vw;
+	  height: 100vh;
+	  border: none;
+	}
+	#uiContainer {
+	  top: 120px;
+	}
+	.iframe #uiContainer {
+		top: 10px;
+	}
+  }
+  
+  

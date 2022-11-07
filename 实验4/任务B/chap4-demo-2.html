@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title></title>
+		<link rel="stylesheet" href="style.css" type="text/css"/>
+		<!-- 顶点着色器和片元着色器代码 -->
+		<script id="vertex-shader" type="x-shader/x-vertex">
+			attribute vec4 a_position;
+			attribute vec4 a_color;
+			varying vec4 v_color;
+			void main(){
+				gl_Position = a_position;
+				v_color=a_color;
+			}
+		</script>
+		<script id="fragment-shader" type="x-shader/x-fragment">
+			precision mediump float;
+			varying vec4 v_color;
+			void main(){
+				gl_FragColor =v_color;
+				
+			}
+		</script>
+		<!-- 一组相关的JS库 -->
+		<script type="text/javascript" src="../任务A/initShaders.js"></script>
+		<script type="text/javascript" src="../任务A/webgl-utils.js"></script>
+		<!-- <script type="text/javascript" src="../js/common/glMatrix-0.9.5.min.js"></script> -->
+		<!-- 绘制三角形的JS代码 -->
+		
+	</head>
+	<body>
+		<br />
+		<div>任务a:包含至少两个以上绘制元素，形状颜色自选。</div>
+		<br />
+		<div id="game">
+			<div id="dino">		
+				<script type="text/javascript" src="triangle2.js"></script>
+				<canvas id="triangle-canvas" style="border:none;" width="300" height="300"></canvas>
+			</div>
+			<div id="block"></div>			
+		</div>
+
+	</body>
+</html>
