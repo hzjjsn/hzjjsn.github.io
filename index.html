@@ -3,65 +3,36 @@
     <head>
         <meta charset="utf-8" />
         <style>
-    body{
-      background: url('a.gif');
-    }
-    button#a{
-			width:185px;
-			height:60px;
-      margin-left: 240px;
-      margin-top: 50px;
-			border-width: 0px;
-			border-radius: 3px;
-			outline: none;
-			font-family: Microsoft YaHei; 
-			font-size: 25px;
-      font-weight: bolder;
-			background:red;
-			color:white;
-		}
-		button#a:hover{
-			background-color:orange;
-		}
-   .text{
-    color:black; 
-   }
-   .text1{
-    color:white;
-    text-transform: uppercase;
-    margin-left: 135px;
-    font-size: 60px;  
-   }
-   .text2{
-    color:white;
-    margin-top: 260px;
-    margin-left: 215px;
-    font-size: 50px;  
-   }
-   .text3{
-    color:white;
-    margin-left: 235px; 
-   }
-   .a1{
-    opacity:80%;
-    width: 55%;
-    margin-top: 50px;
-    height: 750px;
-   }
+          *{
+            margin: 0px;
+            padding: 0px;
+          }
+
+          video{
+            position: fixed;
+            right: 0px;
+            bottom: 0px;
+            min-width: 100%;
+            min-height: 100%;
+            height: auto;
+            width: auto;
+            z-index: -10;
+          }
+
         </style>
+        <script>
+          window.onload=function(){
+            v1=document.getElementById("v1");
+            v1.addEventListener("ended",function(){
+              location.href="indexs.html";
+            });
+          }
+        </script>
     </head>
     <body>
-    <div style="height: 90%;display: flex; ">
-      <div  class="a1">
-        <p class="text" style="opacity:100% ;">1</p>
-        <p class="text2" style="opacity:100% ;">Hello, I'm</p>
-        <p class="text1" style="opacity:100% ;">Soldier Boy</p>
-        <p class="text3" style="opacity:100% ;">Welcome to my website!!</p>
-        <a href="index1.html">
-          <button id="a">enter</button>
-        </a>
-      </div>
-      <p><img src="cc.jpg" style="width: 90%;margin-top: 75px;"></p>
-    </div>
+      <video id="v1" autoplay muted controls>
+          <source src="a.mp4" type="video/mp4"  />
+      </video>
+  
     </body>
 </html>
