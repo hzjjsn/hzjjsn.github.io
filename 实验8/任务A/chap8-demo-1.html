@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.eye{
+				width: 100px;
+				height: 100px;
+				position:absolute ;
+				top: 50%;
+				left: 50%;
+				margin-top: -50px;
+				margin-left: -50px;
+				/* -webkit-perspective: 4000px;/*透视距*/ */
+			}
+			.stage{
+				width: 100px;
+				height: 100px;
+				transform-style: preserve-3d;
+			}
+			.stage>div{
+				width: 100px;
+				height: 100px;
+				opacity:1;
+				text-align: center;
+				line-height: 100px;
+				font-size: 30px;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				
+			}
+			.stage:hover{
+				transform: rotate3d(10,10,10,1800deg);
+				transition: 50s;
+			}
+			.ele1{
+				background-color: black;
+				transform: translateZ(400px);
+			}
+			.ele2{
+				background-color:black;
+				transform: rotateX(30deg) translateZ(400px);
+			}
+			.ele3{
+				background-color: black;
+				transform: rotateX(60deg) translateZ(400px);
+			}
+			.ele4{
+				background-color:black;
+				transform: rotateX(90deg) translateZ(400px);
+			}
+			.ele5{
+				background-color: black;
+				transform: rotateX(120deg) translateZ(400px);
+			}
+			.ele6{
+				background-color: black;
+				transform: rotateX(150deg) translateZ(400px);
+			}
+			.ele7{
+				background-color: black;
+				transform: rotateX(180deg) translateZ(400px);
+			}
+			.ele8{
+				background-color: black;
+				transform: rotateX(210deg) translateZ(400px);
+			}
+			.ele9{
+				background-color: black ;
+				transform: rotateX(240deg) translateZ(400px);
+			}
+			.ele10{
+				background-color: black;
+				transform: rotateX(270deg) translateZ(400px);
+			}
+			.ele11{
+				background-color: black;
+				transform: rotateX(300deg) translateZ(400px);
+			}
+			.ele12{
+				background-color: black;
+				transform: rotateX(330deg) translateZ(400px);
+			}
+			.ele13{
+				background-color: black;
+				transform: rotateX(15deg) rotateY(30deg) translateZ(400px);
+			}
+			.ele14{
+				background-color:black;
+				transform: rotateX(45deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele15{
+				background-color: black;
+				transform: rotateX(75deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele16{
+				background-color: black;
+				transform: rotateX(105deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele17{
+				background-color: black;
+				transform: rotateX(135deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele18{
+				background-color: black;
+				transform: rotateX(165deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele19{
+				background-color: black ;
+				transform: rotateX(195deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele20{
+				background-color: black;
+				transform: rotateX(225deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele21{
+				background-color: black;
+				transform: rotateX(255deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele22{
+				background-color: black;
+				transform: rotateX(285deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele23{
+				background-color: black;
+				transform: rotateX(315deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele24{
+				background-color: black;
+				transform: rotateX(345deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele25{
+				background-color: black;
+				transform: rotateX(375deg)  rotateY(30deg)  translateZ(400px);
+			}
+			.ele26{
+				background-color: black;
+				transform: rotateX(15deg) rotateY(-30deg) translateZ(400px);
+			}
+			.ele27{
+				background-color:black;
+				transform: rotateX(45deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele28{
+				background-color: black;
+				transform: rotateX(75deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele29{
+				background-color: black;
+				transform: rotateX(105deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele30{
+				background-color: black;
+				transform: rotateX(135deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele31{
+				background-color: #000000;
+				transform: rotateX(165deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele32{
+				background-color: black;
+				transform: rotateX(195deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele33{
+				background-color: black;
+				transform: rotateX(225deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele34{
+				background-color: black;
+				transform: rotateX(255deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele35{
+				background-color: black;
+				transform: rotateX(285deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele36{
+				background-color: black;
+				transform: rotateX(315deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele37{
+				background-color: black;
+				transform: rotateX(345deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele38{
+				background-color: black;
+				transform: rotateX(375deg)  rotateY(-30deg)  translateZ(400px);
+			}
+			.ele39{
+				background-color: black;
+				transform: rotateX(0deg)  rotateY(-60deg)  translateZ(400px);
+			}
+			.ele40{
+				background-color: black
+				transform: rotateX(60deg) rotateY(-60deg) translateZ(400px);
+			}
+			.ele41{
+				background-color: black;
+				transform:  rotateX(120deg) rotateY(-60deg) translateZ(400px);
+			}
+			.ele42{
+				background-color:black;
+				transform: rotateX(180deg) rotateY(-60deg) translateZ(400px);
+			}
+			.ele43{
+				background-color: black;
+				transform: rotateX(240deg) rotateY(-60deg) translateZ(400px);
+			}
+			.ele44{
+				background-color:black;
+				transform: rotateX(300deg) rotateY(-60deg) translateZ(400px);
+			}
+			.ele45{
+				background-color: black;
+				transform: rotateX(360deg) rotateY(-60deg) translateZ(400px);
+			}
+			.ele46{
+				background-color: black;
+				transform: rotateX(0deg) rotateY(60deg) translateZ(400px);
+			}
+			.ele47{
+				background-color: black;
+				transform: rotateX(60deg) rotateY(60deg) translateZ(400px);
+			}
+			.ele48{
+				background-color: black;
+				transform: rotateX(120deg) rotateY(60deg) translateZ(400px);
+			}
+			.ele49{
+				background-color: black;
+				transform: rotateX(180deg) rotateY(60deg) translateZ(400px);
+			}
+			.ele50{
+				background-color: black;
+				transform: rotateX(240deg) rotateY(60deg) translateZ(400px);
+			}
+			.ele51{
+				background-color: black;
+				transform: rotateX(300deg) rotateY(60deg) translateZ(400px);
+			}
+			
+			.ele52{
+				background-color: black;
+				transform: rotateX(0deg) rotateY(90deg) translateZ(400px);
+			}
+			.ele53{
+				background-color: black;
+				transform: rotateX(0deg) rotateY(-90deg) translateZ(400px);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="eye">
+			<div class="stage">
+				<div class="ele1">1</div>
+				<div class="ele2">2</div>
+				<div class="ele3">3</div>
+				<div class="ele4">4</div>
+				<div class="ele5">5</div>
+				<div class="ele6">6</div>
+				<div class="ele7">7</div>
+				<div class="ele8">8</div>
+				<div class="ele9">9</div>
+				<div class="ele10">10</div>
+				<div class="ele11">11</div>
+				<div class="ele12">12</div>
+
+				<div class="ele13">13</div>
+				<div class="ele14">14</div>
+				<div class="ele15">15</div>
+				<div class="ele16">16</div>
+				<div class="ele17">17</div>
+				<div class="ele18">18</div>
+				<div class="ele20">20</div>
+				<div class="ele19">19</div>
+				<div class="ele21">21</div>
+				<div class="ele22">22</div>
+				<div class="ele23">23</div>
+				<div class="ele24">24</div>
+				<div class="ele25">25</div>
+				
+				<div class="ele26">26</div>
+				<div class="ele27">27</div>
+				<div class="ele28">28</div>
+				<div class="ele29">29</div>
+				<div class="ele30">30</div>
+				<div class="ele31">31</div>
+				<div class="ele32">32</div>
+				<div class="ele33">33</div>
+				<div class="ele34">34</div>
+				<div class="ele35">35</div>
+				<div class="ele36">36</div>
+				<div class="ele37">37</div>
+				<div class="ele38">38</div>
+				
+				
+				<div class="ele39"></div>
+				<div class="ele40"></div>
+				<div class="ele41"></div>
+				<div class="ele42"></div>
+				<div class="ele43"></div>
+				<div class="ele44"></div>
+				<div class="ele45"></div>
+				
+				<div class="ele46"></div>
+				<div class="ele47"></div>
+				<div class="ele48"></div>
+				<div class="ele49"></div>
+				<div class="ele50"></div>
+				<div class="ele51"></div>
+				
+				<div class="ele52"></div>
+				<div class="ele53"></div>
+			</div>
+		</div>
+	</body>
+</html>
